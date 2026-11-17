@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 
 // Search, X and BadgeCheck from Lucide (https://lucide.dev, ISC licence), inlined so the package has
-// no icon dependency. They match the lucide-react icons the website used.
+// no icon dependency. They match the lucide-react icons the website used. Licence: THIRD_PARTY_NOTICES.md.
 const base = { xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
 
 export const SearchIcon = (props: SVGProps<SVGSVGElement>) =>

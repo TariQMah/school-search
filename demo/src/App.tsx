@@ -34,7 +34,7 @@ export default function App() {
 
   return <main className="demo">
     <section className="hero">
-      <p className="eyebrow">@skolo-saka/school-search · local demo</p>
+      <p className="eyebrow">@skolo-saka/school-search · demo</p>
       <h1>Which school will you help?</h1>
       <p>Fictional schools only. Try <b>sunbird</b> (two schools share the name), <b>riverbend</b>, or <b>zzz</b>.</p>
       <SchoolSearch

@@ -15,5 +15,8 @@ export default defineConfig({
       { find: /^@skolo-saka\/school-search$/, replacement: src('index.ts') },
     ],
   },
+  // GitHub Pages serves the demo from /school-search/; set DEMO_BASE for that build.
+  base: process.env.DEMO_BASE ?? '/',
+  build: { outDir: 'dist', emptyOutDir: true },
   server: { port: 5173 },
 });
