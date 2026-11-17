@@ -1,6 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SchoolSearch, type School, type SchoolSearchProps } from '../src';
+import { SchoolSearch, schoolPlace, type School, type SchoolSearchProps } from '../src';
 import { DEMO_SCHOOLS, matchSchools } from '../demo/src/schools';
 
 // Fake timers so the 250 ms search delay and slow responses are controlled exactly.
@@ -50,6 +50,27 @@ describe('SchoolSearch', () => {
     expect(within(end as HTMLElement).getByRole('img', { name: 'Verified' })).toBeInTheDocument();
     // An unverified name is plain text with nothing to keep together.
     expect(options()[1].querySelector('.skolo-search__name-end')).toBeNull();
+  });
+
+  it('uses formatPlace to distinguish identical names and places without changing the selected record', async () => {
+    const u = user();
+    // Fictional records with the same visible name, place and verified status.
+    const schools = [
+      { ...DEMO_SCHOOLS[0], verified: false },
+      { ...DEMO_SCHOOLS[0], id: DEMO_SCHOOLS[1].id, verified: false },
+    ];
+    const { input, onSelectSchool } = setup({
+      searchSchools: async () => schools,
+      formatPlace: school => `${schoolPlace(school)} · ${school.id}`,
+    });
+    await u.type(input, 'sunbird');
+    await flush(250);
+    expect(options()).toHaveLength(2);
+    expect(within(options()[0]).getByText('Primary school, Riverbend, Limpopo · demo-001')).toBeInTheDocument();
+    expect(within(options()[1]).getByText('Primary school, Riverbend, Limpopo · demo-002')).toBeInTheDocument();
+    await u.click(options()[1]);
+    expect(onSelectSchool).toHaveBeenCalledTimes(1);
+    expect(onSelectSchool.mock.calls[0][0]).toBe(schools[1]);
   });
 
   it('waits for the 250 ms search delay and searches once for quick typing', async () => {
