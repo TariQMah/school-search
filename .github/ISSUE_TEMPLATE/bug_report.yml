@@ -1,0 +1,48 @@
+name: Bug report
+description: Something in the school search does not work as described.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please use fictional schools and data only, and report security problems privately (see SECURITY.md), not here.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Ideally in the demo (https://skolo-saka.github.io/school-search/) or a small code sample.
+      placeholder: |
+        1. Type "sunbird"
+        2. Press the down arrow twice
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version or commit
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, device and assistive technology
+      placeholder: Chrome 140 on Android, TalkBack
+  - type: input
+    id: react
+    attributes:
+      label: React and framework version
+      placeholder: React 19.2, Next.js 16
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, console errors or a link to a minimal reproduction.
