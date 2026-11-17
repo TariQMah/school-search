@@ -79,6 +79,22 @@ export default function App() {
 
 A school is `{ id, name, level?, town?, municipality?, province?, verified? }`. A `level` of `primary`, `high` or `combined` shows as "Primary school", "High school" or "Combined school". For a custom layout, the `useSchoolSearch` hook gives you the search state without the markup.
 
+### Schools with the same name
+
+School names are not unique. The fictional **Sunbird Primary School** results in the demo are in **Riverbend** and **Kopjeskloof**. The place line under each name tells them apart: by default, `schoolPlace` combines the level, town (or municipality when there is no town), and province. Return `town`, `municipality` and/or `province` from `searchSchools` so people can see which school they are choosing.
+
+`onSelectSchool` receives the exact school object picked, including its `id` and any extra fields. Always use **`school.id`**, rather than `school.name`, to identify the selection in your app or navigate to its record.
+
+If two schools share both a name and the same displayed place, those lines look the same; the component does not invent a distinction. Use `formatPlace` to add a suburb or school code supplied by your directory. For example, with the fictional data and functions above, you can append the unique id:
+
+```tsx
+<SchoolSearch
+  searchSchools={searchSchools}
+  onSelectSchool={school => console.log(school.id)}
+  formatPlace={school => `${schoolPlace(school)} · ${school.id}`}
+/>
+```
+
 ### Styles
 
 Import `@skolo-saka/school-search/styles.css` once. Classes are prefixed `skolo-search`. Colours follow these CSS custom properties when the page defines them: `--brand`, `--brand-deep`, `--sun`, `--sun-deep`, `--ink`, `--muted`, `--line`, `--glass-tint`, `--radius-control`, `--shadow-3` and `--z-raised`; otherwise a default green and yellow apply. Any `--skolo-search-*` property can also be set on `.skolo-search`.
