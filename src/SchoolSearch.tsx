@@ -56,6 +56,12 @@ export interface SchoolSearchProps<S extends School = School> {
 
 const plainLink = ({ href, children }: { href: string; children: ReactNode }) => <a href={href}>{children}</a>;
 
+/** A name with its badge, the badge kept on one line with the last word so it never wraps alone. */
+function NameWithBadge({ name, badge }: { name: string; badge: ReactNode }) {
+  const split = name.trimEnd().lastIndexOf(' ') + 1;
+  return <>{name.slice(0, split)}<span className="skolo-search__name-end">{name.slice(split)}{badge}</span></>;
+}
+
 /**
  * "Which school will you help?" A combobox: type a school name or town, then pick a school with the
  * mouse, or the arrow keys and Enter. The app decides where a picked school goes.
@@ -133,7 +139,7 @@ export function SchoolSearch<S extends School = School>({
         {results.map((school, i) => <li key={school.id} id={`${listId}-${i}`} role="option" aria-selected={i === active}
           className={i === active ? 'skolo-search__option--active' : undefined}
           onMouseEnter={() => setActive(i)} onMouseDown={e => { e.preventDefault(); pick(school); }}>
-          <strong>{school.name}{school.verified && <BadgeCheckIcon role="img" aria-label={t.verified} />}</strong>
+          <strong>{school.verified ? <NameWithBadge name={school.name} badge={<BadgeCheckIcon role="img" aria-label={t.verified} />} /> : school.name}</strong>
           <span>{formatPlace(school)}</span>
         </li>)}
       </ul>}

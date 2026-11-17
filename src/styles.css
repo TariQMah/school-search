@@ -39,9 +39,13 @@
 .skolo-search__panel{position:relative;z-index:var(--skolo-search-z);background:#fff;border-top:1px solid var(--skolo-search-line);border-radius:0 0 var(--skolo-search-radius) var(--skolo-search-radius);box-shadow:var(--skolo-search-shadow);overflow:hidden}
 .skolo-search__panel ul{list-style:none;margin:0;padding:6px}
 .skolo-search__panel li{display:grid;gap:2px;padding:12px 16px;border-radius:4px;cursor:pointer}
-.skolo-search__panel li strong{display:flex;align-items:center;gap:6px;color:var(--skolo-search-brand-deep);font-size:16px}
-.skolo-search__panel li strong svg{flex:none;width:17px;height:17px;color:var(--skolo-search-brand)}
-.skolo-search__panel li span{font-size:13.5px;color:var(--skolo-search-muted)}
+/* The name is plain text with the verified badge inline, kept on one line with the name's last word.
+   On a narrow phone a name that wraps keeps its badge beside it, not pushed to the far edge or left
+   alone on a line. Very long words break rather than widen the list. */
+.skolo-search__panel li strong{display:block;color:var(--skolo-search-brand-deep);font-size:16px;overflow-wrap:anywhere}
+.skolo-search__name-end{white-space:nowrap}
+.skolo-search__panel li strong svg{display:inline-block;width:17px;height:17px;margin-left:6px;vertical-align:baseline;color:var(--skolo-search-brand)}
+.skolo-search__panel li>span{font-size:13.5px;color:var(--skolo-search-muted);overflow-wrap:anywhere}
 .skolo-search__option--active{background:var(--skolo-search-tint)}
 .skolo-search .skolo-search__status{margin:0;padding:16px 20px;font-size:14.5px;line-height:1.65;color:var(--skolo-search-muted);max-width:none}
 .skolo-search__status a{color:var(--skolo-search-brand);font-weight:700}
