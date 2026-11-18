@@ -71,10 +71,18 @@ jobs:
         run: node scripts/check-package.mjs "$TARBALL"
         env:
           TARBALL: ${{ steps.pack.outputs.tarball }}
+      # npm rejects a dry run of a version it already has. On a pull request that does not change the
+      # version, there is nothing new to publish; a release pull request (new version) runs it.
       - name: Publish dry run
-        run: npm publish --dry-run --ignore-scripts --access public "./$TARBALL"
+        run: |
+          if npm view "@skolo-saka/school-search@$VERSION" version > /dev/null 2>&1; then
+            echo "::notice::$VERSION is already on npm; the publish dry run runs when the version changes."
+          else
+            npm publish --dry-run --ignore-scripts --access public "./$TARBALL"
+          fi
         env:
           TARBALL: ${{ steps.pack.outputs.tarball }}
+          VERSION: ${{ steps.meta.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
           name: package
