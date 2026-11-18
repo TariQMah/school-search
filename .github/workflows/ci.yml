@@ -29,3 +29,5 @@ jobs:
       - run: npm run build
       - name: Build the demo
         run: npm run demo:build
+      - name: Check the packed package in a clean app
+        run: node scripts/check-package.mjs

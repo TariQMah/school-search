@@ -1,0 +1,150 @@
+name: Release
+
+# Publishes @skolo-saka/school-search to npm when a maintainer pushes a v<version> tag on a commit that
+# is already on main. npm trusted publishing (OIDC) authenticates this workflow file and the `npm`
+# environment: no npm token is stored anywhere, and npm adds provenance automatically.
+# Pull requests that touch packaging run the same checks and a publish dry run, with no publishing
+# permission and no secrets. See RELEASING.md.
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  pull_request:
+    paths:
+      - .github/workflows/release.yml
+      - package.json
+      - package-lock.json
+      - scripts/**
+      - tsup.config.ts
+      - tsconfig.build.json
+
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify the release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      tarball: ${{ steps.pack.outputs.tarball }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # No dependency cache: a release builds only from the lockfile.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: meta
+        name: Check the tag, version and branch
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT" = push ]; then
+            [ "$TAG" = "v$version" ] || { echo "::error::Tag $TAG does not match package.json version $version"; exit 1; }
+            git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::$TAG is not on main"; exit 1; }
+            if npm view "@skolo-saka/school-search@$version" version > /dev/null 2>&1; then
+              echo "::error::$version is already on npm"; exit 1
+            fi
+          fi
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run demo:build
+      - id: pack
+        name: Pack
+        run: |
+          npm pack --ignore-scripts --json > "$RUNNER_TEMP/pack.json"
+          echo "tarball=$(node -p "require(process.env.RUNNER_TEMP + '/pack.json')[0].filename")" >> "$GITHUB_OUTPUT"
+      - name: Check the package in a clean app
+        run: node scripts/check-package.mjs "$TARBALL"
+        env:
+          TARBALL: ${{ steps.pack.outputs.tarball }}
+      - name: Publish dry run
+        run: npm publish --dry-run --ignore-scripts --access public "./$TARBALL"
+        env:
+          TARBALL: ${{ steps.pack.outputs.tarball }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: ${{ steps.pack.outputs.tarball }}
+          if-no-files-found: error
+          retention-days: 90
+
+  publish:
+    name: Publish to npm
+    needs: verify
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Only v* tags may deploy to this environment; npm trusts only this workflow in this environment.
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@skolo-saka/school-search/v/${{ needs.verify.outputs.version }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Use npm 11.5.1 or later (trusted publishing)
+        run: |
+          node -e "const [a,b,c]=process.argv[1].split('.').map(Number);process.exit(a>11||(a===11&&(b>5||(b===5&&c>=1)))?0:1)" "$(npm --version)" \
+            || npm install -g npm@11.6.2
+          npm --version
+      - uses: actions/download-artifact@v4
+        with:
+          name: package
+      - name: Publish with provenance
+        run: npm publish --provenance --access public "./$TARBALL"
+        env:
+          TARBALL: ${{ needs.verify.outputs.tarball }}
+
+  github-release:
+    name: GitHub release
+    needs: [verify, publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: package
+      - name: Attach the exact tarball npm published
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          TARBALL: ${{ needs.verify.outputs.tarball }}
+          VERSION: ${{ needs.verify.outputs.version }}
+        run: |
+          local="sha512-$(openssl dgst -sha512 -binary "$TARBALL" | base64 -w0)"
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            published=$(npm view "@skolo-saka/school-search@$VERSION" dist.integrity 2> /dev/null) && [ -n "$published" ] && break
+            sleep 15
+          done
+          [ "$published" = "$local" ] || { echo "::error::npm integrity '$published' does not match the built tarball $local"; exit 1; }
+          sha256=$(sha256sum "$TARBALL" | cut -d' ' -f1)
+          {
+            echo "**Install:** \`npm install @skolo-saka/school-search@$VERSION\`"
+            echo
+            echo "Published to npm from $GITHUB_SHA by [this workflow run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID), with [provenance](https://www.npmjs.com/package/@skolo-saka/school-search/v/$VERSION#provenance). The attached tarball is the file npm serves."
+            echo
+            echo "- npm integrity: \`$local\`"
+            echo "- SHA-256: \`$sha256\`"
+          } > "$RUNNER_TEMP/notes.md"
+          gh release create "$TAG" "$TARBALL" -R "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" \
+            --notes-file "$RUNNER_TEMP/notes.md" --generate-notes
