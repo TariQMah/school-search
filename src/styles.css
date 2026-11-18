@@ -43,8 +43,11 @@
    On a narrow phone a name that wraps keeps its badge beside it, not pushed to the far edge or left
    alone on a line. Very long words break rather than widen the list. */
 .skolo-search__panel li strong{display:block;color:var(--skolo-search-brand-deep);font-size:16px;overflow-wrap:anywhere}
-.skolo-search__name-end{white-space:nowrap}
-.skolo-search__panel li strong svg{display:inline-block;width:17px;height:17px;margin-left:6px;vertical-align:baseline;color:var(--skolo-search-brand)}
+/* An inline flex box moves to the next line whole, like nowrap, but a last word too long for the row
+   can still break inside it, so the badge stays in the row instead of being pushed out and clipped.
+   flex-end keeps the badge on the word's last line; 2px puts it where the desktop badge always sat. */
+.skolo-search__name-end{display:inline-flex;align-items:flex-end;max-width:100%}
+.skolo-search__panel li strong svg{flex:none;width:17px;height:17px;margin:0 0 2px 6px;color:var(--skolo-search-brand)}
 .skolo-search__panel li>span{font-size:13.5px;color:var(--skolo-search-muted);overflow-wrap:anywhere}
 .skolo-search__option--active{background:var(--skolo-search-tint)}
 .skolo-search .skolo-search__status{margin:0;padding:16px 20px;font-size:14.5px;line-height:1.65;color:var(--skolo-search-muted);max-width:none}
