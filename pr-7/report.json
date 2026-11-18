@@ -1,0 +1,480 @@
+{
+ "before-320-school": {
+  "innerWidth": 381,
+  "scrollWidth": 381,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 83,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "before-320-school-longlastword": {
+  "nameScrollW": 293,
+  "nameClientW": 293,
+  "clipped": false,
+  "badgeVisible": true,
+  "pageHScroll": false
+ },
+ "before-320-lighthouse": {
+  "innerWidth": 381,
+  "scrollWidth": 381,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "before-375-school": {
+  "innerWidth": 381,
+  "scrollWidth": 381,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 83,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "before-375-school-longlastword": {
+  "nameScrollW": 293,
+  "nameClientW": 293,
+  "clipped": false,
+  "badgeVisible": true,
+  "pageHScroll": false
+ },
+ "before-375-lighthouse": {
+  "innerWidth": 381,
+  "scrollWidth": 381,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 321.4,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "before-desktop-school": {
+  "innerWidth": 1024,
+  "scrollWidth": 1024,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "before-desktop-lighthouse": {
+  "innerWidth": 1024,
+  "scrollWidth": 1024,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-320-school": {
+  "innerWidth": 320,
+  "scrollWidth": 320,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 83,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 83,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 86,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 35,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 104,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 83,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 104,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-320-school-longlastword": {
+  "nameScrollW": 212,
+  "nameClientW": 212,
+  "clipped": false,
+  "badgeVisible": true,
+  "pageHScroll": false
+ },
+ "after-320-lighthouse": {
+  "innerWidth": 320,
+  "scrollWidth": 320,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 104,
+    "w": 244,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-375-school": {
+  "innerWidth": 375,
+  "scrollWidth": 375,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 83,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-375-school-longlastword": {
+  "nameScrollW": 267,
+  "nameClientW": 267,
+  "clipped": false,
+  "badgeVisible": true,
+  "pageHScroll": false
+ },
+ "after-375-lighthouse": {
+  "innerWidth": 375,
+  "scrollWidth": 375,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 299,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-desktop-school": {
+  "innerWidth": 1024,
+  "scrollWidth": 1024,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Sunbird Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Baobab Ridge High School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   },
+   {
+    "name": "Aloe Valley High School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false,
+    "badgeGap": 6,
+    "badgeSameLine": true,
+    "badgeTop": 14,
+    "badgeOverlapsText": false
+   },
+   {
+    "name": "Morning Star Primary School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ },
+ "after-desktop-lighthouse": {
+  "innerWidth": 1024,
+  "scrollWidth": 1024,
+  "hScroll": false,
+  "rows": [
+   {
+    "name": "Lighthouse Bay Combined School",
+    "h": 65,
+    "w": 548,
+    "nameClipped": false,
+    "placeClipped": false
+   }
+  ]
+ }
+}
