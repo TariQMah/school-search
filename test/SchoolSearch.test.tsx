@@ -113,6 +113,71 @@ describe('SchoolSearch', () => {
     expect(onSelectSchool).toHaveBeenCalledWith(expect.objectContaining({ id: 'demo-006', name: 'Morning Star Primary School' }));
   });
 
+  describe('keyboard edges', () => {
+    // "school" matches six fictional schools, enough to walk from end to end.
+    const highlighted = () => options().filter(o => o.getAttribute('aria-selected') === 'true');
+    const expectHighlight = (input: HTMLElement, i: number) => {
+      expect(highlighted()).toEqual([options()[i]]);
+      expect(input).toHaveAttribute('aria-activedescendant', options()[i].id);
+    };
+
+    it('keeps the highlight on the first result with ArrowUp and on the last with ArrowDown', async () => {
+      const u = user();
+      const { input } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      const last = options().length - 1;
+      expect(last).toBeGreaterThan(1);
+      expectHighlight(input, 0);
+      await u.keyboard('{ArrowUp}{ArrowUp}{ArrowUp}'); // no wrap to the last, no lost highlight
+      expectHighlight(input, 0);
+      for (let i = 0; i < last; i++) await u.keyboard('{ArrowDown}');
+      expectHighlight(input, last);
+      await u.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}'); // no wrap to the first
+      expectHighlight(input, last);
+      await u.keyboard('{ArrowUp}');
+      expectHighlight(input, last - 1);
+    });
+
+    it('points aria-activedescendant at the highlighted option on every arrow key', async () => {
+      const u = user();
+      const { input } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      const ids = options().map(o => o.id);
+      expect(new Set(ids).size).toBe(ids.length);
+      const listbox = screen.getByRole('listbox');
+      expect(input).toHaveAttribute('aria-controls', listbox.id);
+      const steps = ['{ArrowDown}', '{ArrowDown}', '{ArrowUp}', '{ArrowDown}', '{ArrowDown}', '{ArrowUp}', '{ArrowUp}', '{ArrowUp}'];
+      for (const key of steps) {
+        await u.keyboard(key);
+        const [current] = highlighted();
+        expect(highlighted()).toHaveLength(1);
+        expect(input.getAttribute('aria-activedescendant')).toBe(current.id);
+        // The id belongs to an option inside the list the input controls.
+        expect(within(listbox).getAllByRole('option')).toContain(document.getElementById(current.id));
+      }
+    });
+
+    it('lets Tab move focus out and close the list without picking a school', async () => {
+      const u = user();
+      const { input, onSelectSchool } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      await u.keyboard('{ArrowDown}'); // a school is highlighted, but Tab must not pick it
+      expect(input).toHaveAttribute('aria-activedescendant', options()[1].id);
+      await u.tab();
+      expect(input).not.toHaveFocus();
+      expect(screen.getByRole('button', { name: 'Clear search' })).toHaveFocus();
+      await flush(150); // the list closes once the box loses focus
+      expect(options()).toHaveLength(0);
+      expect(input).toHaveAttribute('aria-expanded', 'false');
+      expect(input).not.toHaveAttribute('aria-activedescendant');
+      expect(onSelectSchool).not.toHaveBeenCalled();
+      expect(input).toHaveValue('school');
+    });
+  });
+
   it('closes the list with Escape', async () => {
     const u = user();
     const { input } = setup();
