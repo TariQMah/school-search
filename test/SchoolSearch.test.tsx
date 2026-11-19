@@ -38,6 +38,20 @@ describe('SchoolSearch', () => {
     expect(options()).toHaveLength(0);
   });
 
+  it('keeps the verified badge on one line with the last word of the name', async () => {
+    const u = user();
+    const { input } = setup();
+    await u.type(input, 'sunbird');
+    await flush(250);
+    const name = options()[0].querySelector('strong')!;
+    expect(name).toHaveTextContent(/^Sunbird Primary School$/);
+    const end = name.querySelector('.skolo-search__name-end')!;
+    expect(end).toHaveTextContent(/^School$/);
+    expect(within(end as HTMLElement).getByRole('img', { name: 'Verified' })).toBeInTheDocument();
+    // An unverified name is plain text with nothing to keep together.
+    expect(options()[1].querySelector('.skolo-search__name-end')).toBeNull();
+  });
+
   it('uses formatPlace to distinguish identical names and places without changing the selected record', async () => {
     const u = user();
     // Fictional records with the same visible name, place and verified status.
