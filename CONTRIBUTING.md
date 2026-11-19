@@ -57,6 +57,7 @@ You need [Node.js 24](https://nodejs.org/) (24.11 or later) and Git. `.nvmrc` pi
 - Say how you tested it, including keyboard or screen-reader checks for UI changes.
 - The **Typecheck, test and build** check must pass, and a maintainer must approve the pull request before it can be merged. `main` does not accept direct pushes.
 - A maintainer may ask for changes. Push more commits to the same branch; there is no need to open a new pull request.
+- Leave the version in `package.json` alone. Maintainers set it when they release, as described in [RELEASING.md](RELEASING.md). Merged changes reach npm, and then the Skolo Saka website, in the next release.
 
 ## Licence
 
