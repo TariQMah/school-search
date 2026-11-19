@@ -1,6 +1,7 @@
 # school-search
 
 [![CI](https://github.com/skolo-saka/school-search/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/skolo-saka/school-search/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@skolo-saka/school-search.svg)](https://www.npmjs.com/package/@skolo-saka/school-search)
 [![MIT licence](https://img.shields.io/badge/licence-MIT-green.svg)](LICENSE)
 
 `@skolo-saka/school-search` is an accessible React and TypeScript combobox for finding a school as you type and picking it. It was extracted from the "Which school will you help?" search on [Skolo Saka](https://skolosaka.co.za)'s homepage, and works in any React 18 or 19 app.
@@ -16,14 +17,12 @@ The component handles the rest: a 250 ms search delay and two-letter minimum, na
 
 ## Status
 
-**Version 0.1.0 is available as a [GitHub release](https://github.com/skolo-saka/school-search/releases/tag/v0.1.0).** It is not on npm yet. Publishing to npm and switching the Skolo Saka website over to this package are the next phase.
+**Published on [npm](https://www.npmjs.com/package/@skolo-saka/school-search)** and used by the [Skolo Saka website](https://www.skolosaka.co.za)'s homepage search. Releases are listed on the [releases page](https://github.com/skolo-saka/school-search/releases). Each one is published from a version tag by GitHub Actions with npm provenance; see [RELEASING.md](RELEASING.md). The API may still change before 1.0. A change that can need work in your app gets a new minor version.
 
 ## Install
 
-From the GitHub release tarball:
-
 ```bash
-npm install https://github.com/skolo-saka/school-search/releases/download/v0.1.0/skolo-saka-school-search-0.1.0.tgz
+npm install @skolo-saka/school-search
 ```
 
 React and React DOM 18 or later are peer dependencies. The package ships ES module and CommonJS builds, TypeScript declarations and one stylesheet.
@@ -139,11 +138,11 @@ npm run build
 npm run demo:build
 ```
 
-`npm run build` writes the package to `dist/`; `npm run demo:build` writes the static demo to `demo/dist/`. `npm pack` builds and writes `skolo-saka-school-search-<version>.tgz`, which another app can install with `npm install ./skolo-saka-school-search-0.1.0.tgz`.
+`npm run build` writes the package to `dist/`; `npm run demo:build` writes the static demo to `demo/dist/`. `npm pack` builds and writes `skolo-saka-school-search-<version>.tgz`, which another app can install with `npm install ./skolo-saka-school-search-<version>.tgz`. `node scripts/check-package.mjs` packs the package and checks it in a clean app: its files, ES module and CommonJS builds, `styles.css` and TypeScript types.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork, branch, test and pull-request workflow, and the [good first issues](https://github.com/skolo-saka/school-search/labels/good%20first%20issue). Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Report security problems privately as described in [SECURITY.md](SECURITY.md).
+Maintainers release new versions as described in [RELEASING.md](RELEASING.md). See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork, branch, test and pull-request workflow, and the [good first issues](https://github.com/skolo-saka/school-search/labels/good%20first%20issue). Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Report security problems privately as described in [SECURITY.md](SECURITY.md).
 
 ## Licence
 
