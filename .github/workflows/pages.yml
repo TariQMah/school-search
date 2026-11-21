@@ -1,6 +1,7 @@
 name: Demo
 
-# Publishes the demo (fictional schools only) to GitHub Pages from main.
+# Publishes the demo to GitHub Pages from main. It searches the live Skolo Saka school directory
+# through the production website's public API (fictional schools are in its testing mode only).
 on:
   push:
     branches: [main]
@@ -28,6 +29,7 @@ jobs:
       - run: npm run demo:build
         env:
           DEMO_BASE: /school-search/
+          VITE_SKOLO_SAKA_ORIGIN: https://www.skolosaka.co.za
       - uses: actions/upload-pages-artifact@v3
         with:
           path: demo/dist

@@ -6,7 +6,7 @@
 
 `@skolo-saka/school-search` is an accessible React and TypeScript combobox for finding a school as you type and picking it. It was extracted from the "Which school will you help?" search on [Skolo Saka](https://skolosaka.co.za)'s homepage, and works in any React 18 or 19 app.
 
-**[Try the demo](https://skolo-saka.github.io/school-search/)** (fictional schools only). Type **sunbird**: two schools share that name, and the one you pick is the one handed back.
+**[Try the demo](https://skolo-saka.github.io/school-search/)**, which searches the live Skolo Saka school directory. Type **sunnyside primary**: two real schools share that name, in Cape Town and Pretoria, and the one you pick is the one handed back, with a link to its page on the Skolo Saka website.
 
 You supply two functions:
 
@@ -80,7 +80,7 @@ A school is `{ id, name, level?, town?, municipality?, province?, verified? }`. 
 
 ### Schools with the same name
 
-School names are not unique. The fictional **Sunbird Primary School** results in the demo are in **Riverbend** and **Kopjeskloof**. The place line under each name tells them apart: by default, `schoolPlace` combines the level, town (or municipality when there is no town), and province. Return `town`, `municipality` and/or `province` from `searchSchools` so people can see which school they are choosing.
+School names are not unique. In the live demo, **sunnyside primary** finds two real Sunnyside Primary Schools, one in Cape Town and one in Pretoria. In testing mode, the fictional **Sunbird Primary School** results are in **Riverbend** and **Kopjeskloof**. The place line under each name tells them apart: by default, `schoolPlace` combines the level, town (or municipality when there is no town), and province. Return `town`, `municipality` and/or `province` from `searchSchools` so people can see which school they are choosing.
 
 `onSelectSchool` receives the exact school object picked, including its `id` and any extra fields. Always use **`school.id`**, rather than `school.name`, to identify the selection in your app or navigate to its record.
 
@@ -118,7 +118,48 @@ Run the demo at http://localhost:5173:
 npm run demo
 ```
 
-The demo imports `@skolo-saka/school-search` exactly as an app would (Vite points that name at `src/`) and uses fictional schools only. Try **sunbird** (same name, two towns), **zzz** (no results), "Every search fails" then **Try again**, and "Slow short queries" while typing **sun** then **bird** (the late answer for "sun" is logged but not shown).
+The demo imports `@skolo-saka/school-search` exactly as an app would (Vite points that name at `src/`).
+
+### Live search
+
+By default the demo searches the **live Skolo Saka school directory** through the website's public API, `GET https://www.skolosaka.co.za/api/public/schools/search?q=<text>`. The API returns at most 10 real schools with public fields only: `id`, `name`, `town`, `municipality`, `province`, `level` and `verified`. The connection lives in the demo (`demo/src/liveSearch.ts`), not in the package. The package has no knowledge of Skolo Saka's backend, and any app supplies its own `searchSchools`.
+
+- The request uses the `AbortSignal` the component passes, so a newer search cancels the older one.
+- An answer without a `schools` array is treated as an error. Malformed schools in an answer are skipped.
+- A failed request shows the error and **Try again**. It never falls back to fictional schools.
+- Picking a school shows its name, place and ID, with a link to `https://www.skolosaka.co.za/school/<id>`.
+- **Find school** with several matches opens the website's directory search (`/schools?q=`). The no-results and error messages link to the website's contact and donate pages.
+
+Try **sunnyside primary** (two schools with the same name), **hoerskool ben vorster**, **st john's college** and **zzqqxx** (no matches).
+
+#### Configuration
+
+`VITE_SKOLO_SAKA_ORIGIN` chooses the website whose API and pages the demo uses. The default is production, `https://www.skolosaka.co.za`, and the GitHub Pages workflow sets it explicitly. Set it in the environment or in `demo/.env.local`.
+
+- **Published demo (`npm run demo:build`):** the browser calls `<origin>/api/public/schools/search` directly. The API allows cross-origin requests only from `https://skolo-saka.github.io`.
+- **Local demo (`npm run demo` or `vite preview`):** the browser calls the demo's own server, which forwards `/api/public/` to the origin. No CORS exception is needed.
+
+```bash
+# UAT: test data, and links open UAT school pages
+VITE_SKOLO_SAKA_ORIGIN=https://skolo-saka-uat.azurewebsites.net npm run demo
+```
+
+```bash
+# A website running locally on port 3000
+VITE_SKOLO_SAKA_ORIGIN=http://localhost:3000 npm run demo
+```
+
+A built demo served from another local origin calls the website directly. That website must list the origin in `PUBLIC_API_DEV_ORIGINS`, which production ignores.
+
+### Testing mode (fictional schools)
+
+Choose **Testing mode: 8 fictional schools** under **Data source** to use made-up schools (`demo/src/schools.ts`). The simulation controls appear only in testing mode and affect only the fictional source:
+
+- Try **sunbird** (same name, two towns) and **zzz** (no results).
+- Choose "Every search fails", then press **Try again**.
+- Choose "Slow short queries", then type **sun** and then **bird**. The late answer for "sun" is logged but not shown.
+
+Switching between the live directory and testing mode clears the search and cancels any request in flight, so results from the two sources never mix. Fictional schools have no website page. The automated tests use fixtures only and never call the live API.
 
 Run the checks that CI runs:
 

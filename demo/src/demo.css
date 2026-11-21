@@ -17,3 +17,12 @@ fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
 .log{font:13px ui-monospace,monospace;color:var(--muted);padding-left:18px;min-height:20px}
 details{font-size:14px;margin-top:12px}
 @media (max-width:560px){.hero{padding:28px 16px 32px;border-radius:16px}}
+/* Which data source the search is using. */
+.source-badge{display:inline-block;margin-right:6px;padding:2px 10px;border-radius:999px;background:var(--sun);color:var(--ink);font-size:13px;font-weight:800}
+.source-badge.testing{background:#fde2e1;color:#7a1712}
+.panel.testing{border-color:#f0b4b0;background:#fffafa}
+.hint{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+label small{color:var(--muted);overflow-wrap:anywhere}
+/* Ids and school-page links are long: wrap them rather than widen a 320 px page. */
+dd,dd code,dd a,.log li{overflow-wrap:anywhere;word-break:break-word}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
