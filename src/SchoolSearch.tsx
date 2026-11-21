@@ -94,9 +94,15 @@ export function SchoolSearch<S extends School = School>({
     if (e.key === 'Escape') { setOpen(false); return; }
     // Enter with a school highlighted in the open list picks that school.
     if (e.key === 'Enter' && open && state === 'results' && results[active]) { e.preventDefault(); pick(results[active]); return; }
-    if (state !== 'results') return;
-    if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); setActive(i => Math.min(results.length - 1, i + 1)); }
-    if (e.key === 'ArrowUp') { e.preventDefault(); setActive(i => Math.max(0, i - 1)); }
+    if (state !== 'results' || (e.key !== 'ArrowDown' && e.key !== 'ArrowUp')) return;
+    // Home and End are left to the text box, where they move the caret (the ARIA editable combobox pattern).
+    e.preventDefault();
+    const down = e.key === 'ArrowDown';
+    // On a closed list, an arrow key opens it: ArrowDown on the first school, ArrowUp on the last.
+    // The hidden highlight never moves, so every key press has a visible, announced result.
+    if (!open) { setOpen(true); setActive(down ? 0 : results.length - 1); return; }
+    // In the open list the arrows stop at the first and last school; they do not wrap.
+    setActive(i => (down ? Math.min(results.length - 1, i + 1) : Math.max(0, i - 1)));
   }
 
   // "Find school" (or Enter without a highlighted school): one match picks that school; several go to

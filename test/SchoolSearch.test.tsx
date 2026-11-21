@@ -159,6 +159,70 @@ describe('SchoolSearch', () => {
       }
     });
 
+    // skolo-saka/school-search#8: on a closed list, an arrow key opens it instead of moving a hidden highlight.
+    it('ArrowUp on a closed list opens it on the last school, without moving a hidden highlight first', async () => {
+      const u = user();
+      const { input } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      const last = options().length - 1;
+      await u.keyboard('{ArrowDown}{ArrowDown}');
+      expectHighlight(input, 2);
+      await u.keyboard('{Escape}');
+      expect(options()).toHaveLength(0);
+      expect(input).not.toHaveAttribute('aria-activedescendant');
+      await u.keyboard('{ArrowUp}');
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+      expectHighlight(input, last);
+      await u.keyboard('{ArrowDown}'); // already the last: stays there
+      expectHighlight(input, last);
+    });
+
+    it('ArrowDown on a closed list opens it on the first school', async () => {
+      const u = user();
+      const { input, onSelectSchool } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      await u.keyboard('{ArrowDown}{ArrowDown}');
+      await u.keyboard('{Escape}');
+      await u.keyboard('{ArrowDown}');
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+      expectHighlight(input, 0);
+      await u.keyboard('{ArrowDown}');
+      expectHighlight(input, 1);
+      const second = matchSchools('school')[1];
+      await u.keyboard('{Enter}');
+      expect(onSelectSchool).toHaveBeenCalledWith(second);
+    });
+
+    it('Enter on a closed list does not pick the hidden highlight', async () => {
+      const u = user();
+      const onSearchAll = vi.fn();
+      const { input, onSelectSchool } = setup({ onSearchAll });
+      await u.type(input, 'school');
+      await flush(250);
+      await u.keyboard('{ArrowDown}{Escape}{Enter}');
+      expect(onSelectSchool).not.toHaveBeenCalled();
+      expect(onSearchAll).toHaveBeenCalledWith('school');
+    });
+
+    it('leaves Home and End to the text box: they move the caret and keep the highlight', async () => {
+      const u = user();
+      const { input } = setup();
+      await u.type(input, 'school');
+      await flush(250);
+      await u.keyboard('{ArrowDown}{ArrowDown}');
+      expectHighlight(input, 2);
+      const field = input as HTMLInputElement;
+      await u.keyboard('{Home}');
+      expect(field.selectionStart).toBe(0);
+      expectHighlight(input, 2);
+      await u.keyboard('{End}');
+      expect(field.selectionStart).toBe('school'.length);
+      expectHighlight(input, 2);
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+    });
+
     it('lets Tab move focus out and close the list without picking a school', async () => {
       const u = user();
       const { input, onSelectSchool } = setup();
