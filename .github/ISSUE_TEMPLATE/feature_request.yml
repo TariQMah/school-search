@@ -1,0 +1,33 @@
+name: Feature or change
+description: Propose a new prop, behaviour or documentation improvement.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Changes to props, markup, class names or keyboard behaviour can need work in apps that use the component, so we agree the approach here before anyone writes code.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What's hard or impossible today, and who is affected (people searching, screen-reader users, app developers)?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What should happen instead? Sketch the prop or behaviour if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility
+      description: How does this work with a keyboard and a screen reader?
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to work on this myself.

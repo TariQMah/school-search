@@ -3,3 +3,6 @@ contact_links:
   - name: Report a security vulnerability
     url: https://github.com/skolo-saka/school-search/security/advisories/new
     about: Report security problems privately, not in a public issue.
+  - name: Wrong school name or location
+    url: https://github.com/skolo-saka/school-directory/issues/new?template=school_data_correction.yml
+    about: School records come from the directory. Report corrections in skolo-saka/school-directory.

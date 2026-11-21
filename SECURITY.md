@@ -19,4 +19,8 @@ We aim to acknowledge reports within 5 working days and to agree a fix and discl
 
 ## Scope
 
-This repository is a React component and a demo with fictional data. It has no server, stores nothing and sends nothing on its own: the app that uses it supplies `searchSchools`. Problems in that app's data source belong to that app.
+This repository is a React component and its demo. The component has no server, stores nothing and sends nothing on its own: the app that uses it supplies `searchSchools`.
+
+- **The demo:** it calls Skolo Saka's public school search API, which returns public school fields only. Report problems with that API the same way.
+- **Other apps:** problems in another app's data source belong to that app.
+- **The directory and importer behind the API:** these live in [school-directory](https://github.com/skolo-saka/school-directory/security).
