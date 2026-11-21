@@ -24,7 +24,7 @@ Pull requests from forks run CI with read-only permissions and no secrets. The r
 
 ## Release a version
 
-1. Open a pull request that sets `version` in `package.json` and `package-lock.json` (`npm version <x.y.z> --no-git-tag-version`). Mention the changes it releases. Merge it after review.
+1. Open a pull request that sets `version` in `package.json` and `package-lock.json` (`npm version <x.y.z> --no-git-tag-version`), and adds the version's section to `CHANGELOG.md`. Merge it after review.
 2. Tag the merge commit on `main` and push the tag. Only repository administrators can create `v*` tags.
 
    ```bash

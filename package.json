@@ -1,6 +1,6 @@
 {
   "name": "@skolo-saka/school-search",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Skolo Saka's homepage school search: a reusable React combobox that finds schools as people type and reports the school they pick.",
   "license": "MIT",
   "homepage": "https://github.com/skolo-saka/school-search#readme",

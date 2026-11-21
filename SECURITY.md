@@ -15,7 +15,8 @@ We aim to acknowledge reports within 5 working days and to agree a fix and discl
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x | Yes |
+| 0.2.x | Yes |
+| 0.1.x | No. Upgrade to 0.2: its only breaking change is the arrow keys on a closed list. |
 
 ## Scope
 
