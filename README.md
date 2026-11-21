@@ -25,7 +25,7 @@ The component handles the rest: a 250 ms search delay and two-letter minimum, na
 npm install @skolo-saka/school-search
 ```
 
-React and React DOM 18 or later are peer dependencies. The package ships ES module and CommonJS builds, TypeScript declarations and one stylesheet.
+React and React DOM 18 or later are peer dependencies. The package ships ES module and CommonJS builds, TypeScript declarations for each (`.d.ts` and `.d.cts`) and one stylesheet. The types work with TypeScript's `bundler`, `node16` and `nodenext` module resolution.
 
 ## Use it
 

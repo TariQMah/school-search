@@ -6,6 +6,11 @@
     "emitDeclarationOnly": true,
     "outDir": "dist",
     "rootDir": "src",
+    // NodeNext checks that every relative import names its .js file, so the declarations also work for
+    // apps using node16/nodenext resolution (skolo-saka/school-search#10). scripts/declarations.mjs
+    // then writes the CommonJS copies (.d.cts).
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "types": [],
     "paths": {}
   },

@@ -27,7 +27,7 @@ try {
   const files = execFileSync('tar', ['-tzf', basename(tgz)], { cwd: resolve(tgz, '..'), encoding: 'utf8' })
     .split(/\r?\n/).filter(Boolean).map(f => f.replace(/^package\//, ''));
   const required = ['package.json', 'README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md',
-    'dist/index.js', 'dist/index.cjs', 'dist/index.d.ts', 'dist/styles.css'];
+    'dist/index.js', 'dist/index.cjs', 'dist/index.d.ts', 'dist/index.d.cts', 'dist/styles.css'];
   for (const f of required) if (!files.includes(f)) fail(`missing from the package: ${f}`);
   const stray = files.filter(f => /^(src|test|demo|scripts|\.github)\/|\.tgz$|^node_modules\//.test(f));
   if (stray.length) fail(`should not be published: ${stray.join(', ')}`);
@@ -63,24 +63,43 @@ try {
   `);
   execFileSync(process.execPath, ['esm.mjs'], { cwd: app, stdio: 'inherit' });
 
+  // 3. TypeScript types in every resolution mode apps use, from ES modules and from CommonJS.
+  // The @ts-expect-error lines fail the check if the types silently become `any`.
   writeFileSync(join(app, 'app.tsx'), `
-    import { SchoolSearch, type School, type SchoolSearchProps } from '@skolo-saka/school-search';
+    import { SchoolSearch, schoolPlace, type School, type SchoolSearchProps } from '@skolo-saka/school-search';
     import '@skolo-saka/school-search/styles.css';
     const props: SchoolSearchProps = { searchSchools: async (): Promise<School[]> => [], onSelectSchool: (s: School) => void s.id };
     export const App = () => <SchoolSearch {...props} />;
+    export const place: string = schoolPlace({ level: 'primary', town: 'Riverbend' });
     // @ts-expect-error searchSchools is required
     export const Broken = () => <SchoolSearch onSelectSchool={() => {}} />;
+    // @ts-expect-error schoolPlace takes a school, not a number
+    schoolPlace(1);
+  `);
+  writeFileSync(join(app, 'app.cts'), `
+    import { createElement } from 'react';
+    import { SchoolSearch, schoolPlace, type School, type SchoolSearchProps } from '@skolo-saka/school-search';
+    const props: SchoolSearchProps<School & { emis?: string }> = { searchSchools: async () => [], onSelectSchool: s => void s.emis };
+    export const app = createElement(SchoolSearch, props);
+    export const place: string = schoolPlace({ level: 'high' });
+    // @ts-expect-error onSelectSchool is required
+    export const broken: SchoolSearchProps = { searchSchools: async () => [] };
   `);
   writeFileSync(join(app, 'css.d.ts'), "declare module '*.css';\n");
-  // Bundler resolution, as Next.js, Vite and the Skolo Saka website use. node16/nodenext resolution
-  // needs explicit .js specifiers in the declarations: skolo-saka/school-search#10.
-  for (const resolution of ['bundler']) {
+  // Bundler resolution is what Next.js, Vite and the Skolo Saka website use; node16/nodenext is what
+  // Node.js libraries and tools use (skolo-saka/school-search#10).
+  for (const resolution of ['bundler', 'node16', 'nodenext']) {
     writeFileSync(join(app, 'tsconfig.json'), JSON.stringify({ compilerOptions: {
-      strict: true, noEmit: true, jsx: 'react-jsx', skipLibCheck: false, target: 'es2022',
-      module: resolution === 'bundler' ? 'esnext' : 'nodenext', moduleResolution: resolution }, files: ['app.tsx', 'css.d.ts'] }));
+      strict: true, noEmit: true, jsx: 'react-jsx', skipLibCheck: false, target: 'es2022', types: [],
+      module: resolution === 'bundler' ? 'esnext' : resolution, moduleResolution: resolution },
+      files: resolution === 'bundler' ? ['app.tsx', 'css.d.ts'] : ['app.tsx', 'app.cts', 'css.d.ts'] }));
     execFileSync(process.execPath, [join(app, 'node_modules/typescript/bin/tsc'), '-p', '.'], { cwd: app, stdio: 'inherit' });
+    console.log(`TypeScript types (${resolution} resolution${resolution === 'bundler' ? '' : ', ES module and CommonJS'}): ok`);
   }
-  console.log('TypeScript types (bundler resolution): ok');
+
+  // 4. Are the types wrong? Checks every export condition resolves to declarations in the right format.
+  execFileSync(process.execPath, [join(root, 'node_modules/@arethetypeswrong/cli/dist/index.js'), tgz,
+    '--exclude-entrypoints', './styles.css', '--format', 'table-flipped'], { cwd: root, stdio: 'inherit' });
 } catch (e) {
   fail(e.message);
 } finally {
