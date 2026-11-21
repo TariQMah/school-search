@@ -78,6 +78,21 @@ export default function App() {
 
 A school is `{ id, name, level?, town?, municipality?, province?, verified? }`. A `level` of `primary`, `high` or `combined` shows as "Primary school", "High school" or "Combined school". For a custom layout, the `useSchoolSearch` hook gives you the search state without the markup.
 
+### Keyboard
+
+The search box is an [editable combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) with list autocomplete. Focus stays in the text box; `aria-activedescendant` points at the highlighted school.
+
+| Key | List open | List closed (after Escape) |
+| --- | --- | --- |
+| ArrowDown | Highlights the next school. Stops at the last one. | Opens the list on the first school. |
+| ArrowUp | Highlights the previous school. Stops at the first one. | Opens the list on the last school. |
+| Enter | Picks the highlighted school. | Same as "Find school": one match is picked, several go to `onSearchAll`. |
+| Escape | Closes the list. The text stays. | Nothing. |
+| Home / End | Move the text caret. The highlight stays where it is. | Move the text caret. |
+| Tab | Leaves the box and closes the list without picking a school. | Leaves the box. |
+
+The arrows do not wrap from the last school to the first. Home and End belong to the text box, as the ARIA Authoring Practices recommend for an editable combobox, so people can still edit their search while the list is open. The first school is highlighted when results arrive.
+
 ### Schools with the same name
 
 School names are not unique. In the live demo, **sunnyside primary** finds two real Sunnyside Primary Schools, one in Cape Town and one in Pretoria. In testing mode, the fictional **Sunbird Primary School** results are in **Riverbend** and **Kopjeskloof**. The place line under each name tells them apart: by default, `schoolPlace` combines the level, town (or municipality when there is no town), and province. Return `town`, `municipality` and/or `province` from `searchSchools` so people can see which school they are choosing.
