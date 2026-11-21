@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { School, SearchSchools, SearchState } from './types';
+import type { School, SearchSchools, SearchState } from './types.js';
 
 export interface UseSchoolSearchOptions<S extends School> {
   searchSchools: SearchSchools<S>;

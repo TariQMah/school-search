@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
-import { schoolPlace, useSchoolSearch } from './useSchoolSearch';
-import { BadgeCheckIcon, SearchIcon, XIcon } from './icons';
-import type { FallbackLink, School, SchoolSearchMessages, SearchSchools } from './types';
+import { schoolPlace, useSchoolSearch } from './useSchoolSearch.js';
+import { BadgeCheckIcon, SearchIcon, XIcon } from './icons.js';
+import type { FallbackLink, School, SchoolSearchMessages, SearchSchools } from './types.js';
 
 export const defaultMessages: SchoolSearchMessages = {
   label: 'Search for a school',
