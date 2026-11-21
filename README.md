@@ -196,9 +196,14 @@ npm run demo:build
 
 `npm run build` writes the package to `dist/`; `npm run demo:build` writes the static demo to `demo/dist/`. `npm pack` builds and writes `skolo-saka-school-search-<version>.tgz`, which another app can install with `npm install ./skolo-saka-school-search-<version>.tgz`. `node scripts/check-package.mjs` packs the package and checks it in a clean app: its files, ES module and CommonJS builds, `styles.css` and TypeScript types.
 
+## Related projects
+
+- [school-directory](https://github.com/skolo-saka/school-directory): the open-source school directory behind Skolo Saka's search. It provides the PostgreSQL schema, the validated Department of Basic Education importer and a public search API you can connect to `searchSchools`.
+- [Live demo](https://skolo-saka.github.io/school-search/): this component searching the real Skolo Saka directory.
+
 ## Contributing
 
-Maintainers release new versions as described in [RELEASING.md](RELEASING.md). See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork, branch, test and pull-request workflow, and the [good first issues](https://github.com/skolo-saka/school-search/labels/good%20first%20issue). Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Report security problems privately as described in [SECURITY.md](SECURITY.md).
+Maintainers ([MAINTAINERS.md](MAINTAINERS.md)) release new versions as described in [RELEASING.md](RELEASING.md). See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork, branch, test and pull-request workflow, and the [good first issues](https://github.com/skolo-saka/school-search/labels/good%20first%20issue). Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Report security problems privately as described in [SECURITY.md](SECURITY.md).
 
 ## Licence
 
