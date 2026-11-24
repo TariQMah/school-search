@@ -34,10 +34,11 @@ You need [Node.js 24](https://nodejs.org/) (24.11 or later) and Git. `.nvmrc` pi
    ```
 
    Use a `fix/`, `feature/`, `docs/` or `test/` prefix.
+
 2. Make the change. Keep it focused on one thing.
    - Add or update a test in `test/` for any behaviour you change.
    - Keep the component accessible: it is a combobox used with a keyboard and screen readers.
-   - Use only fictional schools, people and places in tests, fixtures, screenshots and issues. Tests must not call the live API. The demo's live mode shows real schools from the public Skolo Saka directory; mention real schools only for example searches. Never paste real learner, donor or user data.
+   - Use only fictional schools, people and places in tests, fixtures, screenshots and issues. Tests must not call the live API. The demo's live mode shows real schools from the public Skolo Saka directory; mention real schools only as example searches. Never paste real learner, donor or user data.
    - Update `README.md` if you change props or behaviour.
 3. Run the same checks as CI:
 
